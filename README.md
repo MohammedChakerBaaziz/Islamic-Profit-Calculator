@@ -1,6 +1,6 @@
 # Islamic Profit Calculator
 
-A simple web app to calculate profit distributions based on Islamic finance contracts: **Mudarabah** and **Musharakah**.
+A simple web app to calculate profit distributions based on Islamic finance contracts: **Mudarabah** and **Musharakah** with AI for explanation
 
 ---
 
@@ -60,6 +60,4 @@ Open `index.html` in your browser to use the app.
 * `index.html` – Frontend UI
 * `.env` – Your Gemini API key (not included in Git)
 * `requirements.txt` - Necessary packages for the backend
-
-```
 
