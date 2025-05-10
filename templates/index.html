@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Islamic Finance Profit Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 800px;
+            margin-top: 30px;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-header {
+            background-color: #00695c;
+            color: white;
+            font-weight: bold;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .btn-primary {
+            background-color: #00695c;
+            border-color: #00695c;
+        }
+
+        .btn-primary:hover {
+            background-color: #004d40;
+            border-color: #004d40;
+        }
+
+        .result-box {
+            background-color: #e8f5e9;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .explanation-box {
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .partner-row {
+            margin-bottom: 10px;
+            padding: 8px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        /* Add these styles to the <style> section in your HTML */
+        .explanation-box {
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .explanation-box h4 {
+            color: #00695c;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .explanation-box p {
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .explanation-box ul {
+            padding-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        .explanation-box li {
+            margin-bottom: 5px;
+        }
+
+        .explanation-box strong {
+            color: #00695c;
+        }
+
+        /* Add these styles to the <style> section in your HTML */
+        .explanation-box {
+            background-color: #e3f2fd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .explanation-box h4 {
+            color: #00695c;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .explanation-box p {
+            margin-bottom: 12px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .explanation-box ul {
+            padding-left: 20px;
+            margin-bottom: 12px;
+        }
+
+        .explanation-box li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .explanation-box strong {
+            color: #00695c;
+            font-weight: 600;
+        }
+
+        .explanation-content {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #00695c;
+        }
+
+        /* Fix for pre tags or code that might appear */
+        .explanation-box pre,
+        .explanation-box code {
+            background: none;
+            padding: 0;
+            margin: 0;
+            white-space: normal;
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            border: none;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Islamic Finance Profit Distribution Calculator</h1>
+
+        <div class="card">
+            <div class="card-header">
+                Contract Type
+            </div>
+            <div class="card-body">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="contractType" id="mudarabah" value="mudarabah"
+                        checked>
+                    <label class="form-check-label" for="mudarabah">Mudarabah</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="contractType" id="musharakah" value="musharakah">
+                    <label class="form-check-label" for="musharakah">Musharakah</label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mudarabah Form -->
+        <div id="mudarabahForm" class="card">
+            <div class="card-header">
+                Mudarabah Parameters
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="mudarabahTotalProfit" class="form-label">Total Profit</label>
+                    <input type="number" class="form-control" id="mudarabahTotalProfit" step="0.01" min="0" required>
+                </div>
+                <div class="mb-3">
+                    <label for="capitalProviderRatio" class="form-label">Capital Provider's Profit Ratio (%)</label>
+                    <input type="number" class="form-control" id="capitalProviderRatio" step="0.01" min="0" max="100"
+                        required>
+                </div>
+                <button id="calculateMudarabah" class="btn btn-primary">Calculate</button>
+            </div>
+        </div>
+
+        <!-- Musharakah Form -->
+        <div id="musharakahForm" class="card" style="display: none;">
+            <div class="card-header">
+                Musharakah Parameters
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label for="musharakahTotalProfit" class="form-label">Total Profit</label>
+                    <input type="number" class="form-control" id="musharakahTotalProfit" step="0.01" min="0" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Partners' Capital Contributions</label>
+                    <div id="capitalContributions">
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Partner 1</span>
+                            <input type="number" class="form-control capital-contribution" step="0.01" min="0" required>
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Partner 2</span>
+                            <input type="number" class="form-control capital-contribution" step="0.01" min="0" required>
+                        </div>
+                    </div>
+                    <button id="addPartner" class="btn btn-sm btn-outline-secondary mt-2">Add Partner</button>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="customProfitRatios">
+                        <label class="form-check-label" for="customProfitRatios">
+                            Use custom profit sharing ratios
+                        </label>
+                    </div>
+                </div>
+
+                <div id="profitRatiosSection" class="mb-3" style="display: none;">
+                    <label class="form-label">Partners' Profit Sharing Ratios (%)</label>
+                    <div id="profitRatios">
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Partner 1</span>
+                            <input type="number" class="form-control profit-ratio" step="0.01" min="0" max="100">
+                        </div>
+                        <div class="input-group mb-2">
+                            <span class="input-group-text">Partner 2</span>
+                            <input type="number" class="form-control profit-ratio" step="0.01" min="0" max="100">
+                        </div>
+                    </div>
+                </div>
+
+                <button id="calculateMusharakah" class="btn btn-primary">Calculate</button>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div id="resultsCard" class="card" style="display: none;">
+            <div class="card-header">
+                Calculation Results
+            </div>
+            <div class="card-body">
+                <div id="mudarabahResults" style="display: none;">
+                    <div class="result-box">
+                        <h5>Profit Distribution:</h5>
+                        <p><strong>Capital Provider's Share:</strong> <span id="capitalProviderShare"></span></p>
+                        <p><strong>Mudarib's Share:</strong> <span id="mudaribShare"></span></p>
+                        <p><strong>Profit Ratio:</strong> <span id="profitRatio"></span></p>
+                    </div>
+                </div>
+
+                <div id="musharakahResults" style="display: none;">
+                    <div class="result-box">
+                        <h5>Profit Distribution:</h5>
+                        <div id="partnerShares"></div>
+                    </div>
+                </div>
+
+                <div class="explanation-box">
+                    <h5>Methodology Explanation:</h5>
+                    <div id="explanation"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Contract type selection
+            const contractRadios = document.querySelectorAll('input[name="contractType"]');
+            const mudarabahForm = document.getElementById('mudarabahForm');
+            const musharakahForm = document.getElementById('musharakahForm');
+
+            contractRadios.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    if (this.value === 'mudarabah') {
+                        mudarabahForm.style.display = 'block';
+                        musharakahForm.style.display = 'none';
+                    } else {
+                        mudarabahForm.style.display = 'none';
+                        musharakahForm.style.display = 'block';
+                    }
+                    document.getElementById('resultsCard').style.display = 'none';
+                });
+            });
+
+            // Add partner button
+            document.getElementById('addPartner').addEventListener('click', function () {
+                const capitalContributions = document.getElementById('capitalContributions');
+                const profitRatios = document.getElementById('profitRatios');
+
+                const partnerCount = capitalContributions.children.length + 1;
+
+                // Add capital contribution input
+                const newCapitalInput = document.createElement('div');
+                newCapitalInput.className = 'input-group mb-2';
+                newCapitalInput.innerHTML = `
+                    <span class="input-group-text">Partner ${partnerCount}</span>
+                    <input type="number" class="form-control capital-contribution" step="0.01" min="0" required>
+                `;
+                capitalContributions.appendChild(newCapitalInput);
+
+                // Add profit ratio input
+                const newRatioInput = document.createElement('div');
+                newRatioInput.className = 'input-group mb-2';
+                newRatioInput.innerHTML = `
+                    <span class="input-group-text">Partner ${partnerCount}</span>
+                    <input type="number" class="form-control profit-ratio" step="0.01" min="0" max="100">
+                `;
+                profitRatios.appendChild(newRatioInput);
+            });
+
+            // Custom profit ratios checkbox
+            document.getElementById('customProfitRatios').addEventListener('change', function () {
+                document.getElementById('profitRatiosSection').style.display = this.checked ? 'block' : 'none';
+            });
+
+            // Calculate Mudarabah
+            document.getElementById('calculateMudarabah').addEventListener('click', async function () {
+                const totalProfit = document.getElementById('mudarabahTotalProfit').value;
+                const capitalProviderRatio = document.getElementById('capitalProviderRatio').value;
+
+                if (!totalProfit || !capitalProviderRatio) {
+                    alert('Please fill all required fields');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/calculate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            contract_type: 'mudarabah',
+                            total_profit: totalProfit,
+                            capital_provider_ratio: capitalProviderRatio
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Display results
+                        document.getElementById('capitalProviderShare').textContent = data.result.capital_provider_share;
+                        document.getElementById('mudaribShare').textContent = data.result.mudarib_share;
+                        document.getElementById('profitRatio').textContent = data.result.profit_ratio;
+                        const explanationContainer = document.getElementById('explanation');
+                        explanationContainer.innerHTML = data.explanation;
+
+                        document.getElementById('mudarabahResults').style.display = 'block';
+                        document.getElementById('musharakahResults').style.display = 'none';
+                        document.getElementById('resultsCard').style.display = 'block';
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred while calculating');
+                }
+            });
+
+            // Calculate Musharakah
+            document.getElementById('calculateMusharakah').addEventListener('click', async function () {
+                const totalProfit = document.getElementById('musharakahTotalProfit').value;
+                const capitalInputs = document.querySelectorAll('.capital-contribution');
+                const useCustomRatios = document.getElementById('customProfitRatios').checked;
+
+                if (!totalProfit) {
+                    alert('Please enter the total profit');
+                    return;
+                }
+
+                const capitalContributions = [];
+                for (let input of capitalInputs) {
+                    if (!input.value) {
+                        alert('Please fill all capital contribution fields');
+                        return;
+                    }
+                    capitalContributions.push(input.value);
+                }
+
+                const requestBody = {
+                    contract_type: 'musharakah',
+                    total_profit: totalProfit,
+                    capital_contributions: capitalContributions
+                };
+
+                if (useCustomRatios) {
+                    const ratioInputs = document.querySelectorAll('.profit-ratio');
+                    const profitRatios = [];
+
+                    for (let input of ratioInputs) {
+                        if (!input.value) {
+                            alert('Please fill all profit ratio fields');
+                            return;
+                        }
+                        profitRatios.push(input.value);
+                    }
+
+                    requestBody.profit_sharing_ratios = profitRatios;
+                }
+
+                try {
+                    const response = await fetch('/api/calculate', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestBody)
+                    });
+
+                    const data = await response.json();
+
+                    if (data.success) {
+                        // Display results
+                        const partnerShares = document.getElementById('partnerShares');
+                        partnerShares.innerHTML = '';
+
+                        data.result.forEach(partner => {
+                            const partnerDiv = document.createElement('div');
+                            partnerDiv.className = 'partner-row';
+                            partnerDiv.innerHTML = `
+                                <p><strong>Partner ${partner.partner}</strong></p>
+                                <p>Capital Contribution: ${partner.capital_contribution} (${partner.capital_ratio}%)</p>
+                                <p>Profit Share: ${partner.profit_share} (${partner.profit_ratio}%)</p>
+                            `;
+                            partnerShares.appendChild(partnerDiv);
+                        });
+
+                        document.getElementById('explanation').innerHTML = data.explanation.replace(/\n/g, '<br>');
+
+                        document.getElementById('mudarabahResults').style.display = 'none';
+                        document.getElementById('musharakahResults').style.display = 'block';
+                        document.getElementById('resultsCard').style.display = 'block';
+                    } else {
+                        alert('Error: ' + data.error);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    alert('An error occurred while calculating');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
