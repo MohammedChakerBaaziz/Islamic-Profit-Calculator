@@ -283,6 +283,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Set the API base URL with the correct port
+            const API_BASE_URL = window.location.protocol === 'http:' ? 'http://localhost:9937' : 'https://localhost:9937';
+
             // Contract type selection
             const contractRadios = document.querySelectorAll('input[name="contractType"]');
             const mudarabahForm = document.getElementById('mudarabahForm');
@@ -343,7 +346,7 @@
                 }
 
                 try {
-                    const response = await fetch('/api/calculate', {
+                    const response = await fetch(`${API_BASE_URL}/api/calculate`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -373,7 +376,7 @@
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    alert('An error occurred while calculating');
+                    alert('An error occurred while calculating. Make sure the backend server is running on port 9937.');
                 }
             });
 
@@ -419,7 +422,7 @@
                 }
 
                 try {
-                    const response = await fetch('/api/calculate', {
+                    const response = await fetch(`${API_BASE_URL}/api/calculate`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -455,7 +458,7 @@
                     }
                 } catch (error) {
                     console.error('Error:', error);
-                    alert('An error occurred while calculating');
+                    alert('An error occurred while calculating. Make sure the backend server is running on port 9937.');
                 }
             });
         });

@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify, render_template
 import google.generativeai as genai
 import os
+from flask_cors import CORS  # Import CORS
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -8,6 +9,7 @@ load_dotenv()
 
 # Initialize Flask app
 app = Flask(__name__)
+CORS(app)  # Enable CORS for all routes
 
 # Configure Gemini API
 print(os.getenv("GEMINI_API_KEY"))
@@ -241,4 +243,4 @@ def calculate():
         }), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5501)
+    app.run(debug=True, port=9937)  # Changed port to 9937 to match frontend
