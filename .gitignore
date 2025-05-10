@@ -1,0 +1,26 @@
+# Python virtual environment
+venv/
+
+# Environment variables
+.env
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# VS Code settings
+.vscode/
+
+# Logs
+*.log
+
+# macOS system files
+.DS_Store
+
+# PyCharm
+.idea/
+
+# Backup files
+*.bak
+*.swp
