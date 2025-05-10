@@ -63,7 +63,3 @@ Open `index.html` in your browser to use the app.
 
 ```
 
----
-
-Let me know if you want this added to a file you can download.
-
